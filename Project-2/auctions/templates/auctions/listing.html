@@ -1,0 +1,154 @@
+{% extends "auctions/layout.html" %} {% block body %}
+<div class="container mb-3">
+  <div class="d-flex justify-content-center align-items-center flex-column">
+    <h2 class="text-center mt-3 mb-4">{{ listing.title }}</h2>
+    <div class="w-75 rounded overflow-hidden mb-5" style="height: 350px">
+      <img
+        src="{{ listing.image }}"
+        alt="{{ listing.title }}"
+        class="w-100 h-100"
+      />
+    </div>
+    <div class="w-100">
+      <div class="d-flex">
+        <h5 class="mr-2">Status:</h5>
+        {%if listing.is_active%}
+        <p>Open</p>
+        {%else%}
+        <p>Close</p>
+        {%endif%}
+      </div>
+      <div>
+        <h5 class="mb-1">Description:</h5>
+        <p>{{ listing.description }}</p>
+      </div>
+      <div class="d-flex">
+        <h5 class="mr-2">Starting Bid:</h5>
+        <p>{{ listing.price }}</p>
+      </div>
+      <div class="d-flex">
+        <h5 class="mr-2">Highest Bid Is:</h5>
+        {% if highest_bid %}
+        <p>{{ highest_bid }}</p>
+        {% else %}
+        <p>{{ listing.price }}</p>
+        {% endif %}
+      </div>
+      {%if listing.winner%}
+      <div class="d-flex">
+        <h5 class="mr-2">Winner is:</h5>
+        <p>{{listing.winner}}</p>
+      </div>
+      {%endif%}
+      <div class="d-flex">
+        <h5 class="mr-2">Category:</h5>
+        <p>{{ listing.category }}</p>
+      </div>
+      <div class="d-flex">
+        <h5 class="mr-2">Owner:</h5>
+        <p>{{ listing.owner }}</p>
+      </div>
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="w-100">
+      <form
+        action="{% url 'handle_watchlist' listing.id %}"
+        method="POST"
+        class="mb-3"
+      >
+        {% csrf_token %} {% if is_exist %}
+        <input
+          type="submit"
+          value="Remove From Watchlist"
+          class="btn btn-danger"
+        />
+        {% else %}
+        <input type="submit" value="Add To Watchlist" class="btn btn-primary" />
+        {% endif %}
+      </form>
+      {% if user == listing.owner %} {% if listing.is_active %}
+      <form action="{% url 'close' listing.id %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Close" class="btn btn-danger" />
+      </form>
+
+      {% else %}
+      <form action="{% url 'open' listing.id %}" method="POST" class="mb-2">
+        {% csrf_token %}
+        <input type="submit" value="Open" class="btn btn-info" />
+      </form>
+      <form action="{% url 'delete' listing.id %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Delete" class="btn btn-danger" />
+      </form>
+      {% endif %} {% endif %}
+    </div>
+    {% endif %} {% if listing.winner %}
+    <div class="text-center mb-5">
+      <h1>The Winner IS:</h1>
+      <h1 class="text-success">{{listing.winner}}</h1>
+    </div>
+    {% else %} {% if user.is_authenticated %}
+    <div class="d-flex align-items-center">
+      <h5 class="mr-2">Add Bid</h5>
+    </div>
+    <form action="{% url 'handle_bid' listing.id %}" method="POST" class="mb-5">
+      {% csrf_token %}
+      <div class="mb-2">
+        <input
+          type="number"
+          name="bid"
+          id="bid"
+          step="any"
+          value="{{ highest_bid }}"
+          required
+        />
+      </div>
+      <input type="submit" value="Add Bid" class="btn btn-primary w-100" />
+      {% if error %}
+      <p class="text-danger">{{ error }}</p>
+      {% endif %}
+    </form>
+    {% endif %} {% endif %}
+
+    <div class="w-100">
+      <h3 class="text-center mb-4">Comments</h3>
+
+      {% if user.is_authenticated %}
+      <form
+        action="{% url 'add_comment' listing.id %}"
+        method="POST"
+        class="w-100 d-flex align-items-center mb-3"
+      >
+        {% csrf_token %}
+        <input
+          type="text"
+          name="comment"
+          id="comment"
+          style="width: 80%; height: 36px"
+          class="mr-2"
+        />
+        <input
+          type="submit"
+          value="Add Comment"
+          class="btn btn-primary"
+          style="width: 18%"
+        />
+      </form>
+      {% endif %} {% if comments %} {%for comment in comments%}
+      <div>
+        <p class="m-0" style="font-size: 1.2rem">{{comment.user.username}}</p>
+        <p class="text-secondary m-0" style="font-size: 1rem">
+          {{comment.date_added}}
+        </p>
+        <p style="font-size: 1.1rem">{{comment.content}}</p>
+      </div>
+      <hr />
+      {%endfor%} {%else%}
+      <h4 class="text-center">No Comments</h4>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

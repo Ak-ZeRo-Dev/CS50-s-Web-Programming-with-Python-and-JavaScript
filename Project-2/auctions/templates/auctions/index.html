@@ -1,0 +1,37 @@
+{% extends "auctions/layout.html" %} {% block body %}
+{%if type == "index"%}
+<h2 class="text-center">Active Listings</h2>
+{%else%}
+<h2 class="text-center">Watchlist</h2>
+{%endif%}
+
+<div class="container mt-5">
+  <div class="row row-cols-1 row-cols-md-4 gap-3">
+    {% for listing in listings %}
+    <div class="col mb-3">
+      <div class="card w-100 h-100" style="width: 18rem">
+        <img
+          src="{{ listing.image }}"
+          class="card-img-top"
+          alt="{{ listing.title }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title" title="{{listing.title}}">
+            {% if listing.title|length > 30 %} {{listing.title|slice:":20"}}...
+            {% else %} {{ listing.title }} {% endif %}
+          </h5>
+          <p class="card-text" title="{{listing.description}}">
+            {% if listing.description|length > 100 %}
+            {{listing.description|slice:":100"}}... {% else %}
+            {{listing.description}} {% endif %}
+          </p>
+          <p class="card-price">{{ listing.price }}</p>
+          <a href="{% url "listing" listing.id %}" class="btn btn-primary">More</a>
+        </div>
+      </div>
+    </div>
+
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

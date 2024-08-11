@@ -1,0 +1,10 @@
+{% extends "encyclopedia/layout.html" %}{% load static %} {% block title %}
+{{title}} {%endblock%} {% block style %} {% static 'encyclopedia/error.css' %}
+{%endblock%} {% block body %}
+<div class="container">
+  <div>
+    <h1>{{statusCode}} {{title}}</h1>
+    <h2>{{message}}</h2>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Search</title>
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: grid;
+        place-items: center;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+      .links {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        gap: 20px;
+      }
+      .container {
+        max-width: 600px;
+        text-align: center;
+      }
+      h1 {
+        font-size: 5rem;
+        margin-bottom: 10px;
+        color: #666;
+      }
+      input[type="text"] {
+        width: 80%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        margin-bottom: 10px;
+        outline: none;
+        transition: 0.3s ease;
+      }
+      input[type="text"]:focus {
+        border: 1px solid #1a73e8;
+      }
+      input[type="submit"],
+      .feeling-lucky {
+        padding: 10px 20px;
+        border: none;
+        background-color: #f2f2f2;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-left: 5px;
+        transition: 0.3s ease;
+      }
+      input[type="submit"]:hover,
+      a:hover {
+        color: #1a73e8;
+      }
+      a {
+        text-decoration: none;
+        transition: 0.3s ease;
+        color: black;
+      }
+      .feeling-lucky {
+        background-color: #f2f2f2;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="links">
+      <a href="./advanced.html">Google Advanced Search</a>
+      <a href="./image.html">Google Images Search</a>
+    </div>
+    <div class="container">
+      <h1>Google</h1>
+      <form action="https://www.google.com/search" method="GET">
+        <input type="text" name="q" placeholder="Search Google..." />
+        <input type="submit" value="Google Search" />
+        <input type="submit" value="I'm Feeling Lucky" name="btnI" />
+      </form>
+    </div>
+  </body>
+</html>

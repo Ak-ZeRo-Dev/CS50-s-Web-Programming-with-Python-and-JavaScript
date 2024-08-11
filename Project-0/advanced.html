@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Advanced Search</title>
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: grid;
+        place-items: center;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+      .links {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        gap: 20px;
+      }
+      .container {
+        max-width: 600px;
+      }
+      form {
+        display: grid;
+      }
+      input[type="text"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        outline: none;
+        transition: 0.3s ease;
+      }
+      input[type="text"]:focus {
+        border: 1px solid #1a73e8;
+      }
+      .btn-blue {
+        background-color: #1a73e8;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      a {
+        color: #666;
+        text-decoration: none;
+        transition: 0.3s ease;
+      }
+      a:hover {
+        color: #1a73e8;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="links">
+      <a href="index.html" class="back-link">Back to Google Search</a>
+    </div>
+    <div class="container">
+      <form action="https://www.google.com/search" method="GET">
+        <div>
+          <div class="form-group">
+            <label for="all-words">Find pages with all these words:</label
+            ><br />
+            <input type="text" id="all-words" name="as_q" />
+          </div>
+          <div class="form-group">
+            <label for="exact-phrase"
+              >Find pages with this exact word or phrase:</label
+            ><br />
+            <input type="text" id="exact-phrase" name="as_epq" />
+          </div>
+          <div class="form-group">
+            <label for="any-words">Find pages with any of these words:</label
+            ><br />
+            <input type="text" id="any-words" name="as_oq" />
+          </div>
+          <div class="form-group">
+            <label for="none-words">Find pages with none of these words:</label
+            ><br />
+            <input type="text" id="none-words" name="as_eq" />
+          </div>
+        </div>
+        <input type="submit" value="Advanced Search" class="btn-blue" />
+      </form>
+    </div>
+  </body>
+</html>
